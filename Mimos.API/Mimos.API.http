@@ -1,0 +1,6 @@
+@Mimos.API_HostAddress = http://localhost:5287
+
+GET {{Mimos.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
