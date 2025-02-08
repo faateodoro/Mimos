@@ -1,6 +1,6 @@
 namespace Mimos.Test
 {
-    public class UnitTest1
+    public class ProductTest
     {
         [Fact]
         public void Test1()
