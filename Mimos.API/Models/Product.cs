@@ -24,14 +24,24 @@ namespace Mimos.API.Models
             SellingPrice = sellingPrice;
         }
 
-        public Product(ProductForm dto)
+        public Product(ProductForm form)
         {
-            Name = dto.Name;
-            Description = dto.Description;
-            CodeBar = dto.CodeBar;
-            Amount = dto.Amount;
-            BuyingPrice = dto.BuyingPrice;
-            SellingPrice = dto.SellingPrice;
+            Name = form.Name;
+            Description = form.Description;
+            CodeBar = form.CodeBar;
+            Amount = form.Amount;
+            BuyingPrice = form.BuyingPrice;
+            SellingPrice = form.SellingPrice;
+        }
+
+        public void Update(ProductForm form)
+        {
+            Name = form.Name;
+            Description = form.Description;
+            CodeBar = form.CodeBar;
+            Amount = form.Amount;
+            BuyingPrice = form.BuyingPrice;
+            SellingPrice = form.SellingPrice;
         }
         
     }

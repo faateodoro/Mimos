@@ -37,7 +37,7 @@ public class ProductRepository
         return products;
     }
 
-    public async Task<Product> GetByIdAsync(long id)
+    public async Task<Product> GetByIdAsync(int id)
     {
         if (!_context.Products.Any()) throw new KeyNotFoundException("There's no record on DB.");
         var product = await _context.Products.FirstAsync(x => x.Id == id);
@@ -45,7 +45,7 @@ public class ProductRepository
         return product;
     }
 
-    //public async Task RemoveAsync(long id)
+    //public async Task RemoveAsync(int id)
     //{
     //    var products = await GetByIdAsync(id);
     //    if (products == null) throw new KeyNotFoundException("There's no record on DB.");
@@ -54,7 +54,7 @@ public class ProductRepository
     //    await _context.SaveChangesAsync();
     //}
 
-    public async Task<Product> UpdateAsync(long id, ProductForm form)
+    public async Task<Product> UpdateAsync(int id, ProductForm form)
     {
         var product = await GetByIdAsync(id);
         if (product == null) throw new KeyNotFoundException("There's no record on DB.");
