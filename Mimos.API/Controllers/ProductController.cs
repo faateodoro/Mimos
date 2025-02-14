@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mimos.API.Models;
 using Mimos.API.Models.DTO;
 using Mimos.API.Repositories;
 
@@ -18,28 +19,78 @@ public class ProductController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var products = await _productRepository.GetAllAsync();
+        IList<Product> products;
+        try
+        {
+            products = await _productRepository.GetAllAsync();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        
         return Ok(products);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get([FromQuery] int id)
     {
-        var product = await _productRepository.GetByIdAsync(id);
+        Product product;
+        try
+        {
+            product = await _productRepository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
         return Ok(product);
     }
 
     [HttpGet]
+    [Route("withstock")]
     public async Task<IActionResult> GetWithStock()
     {
-        var product = await _productRepository.GetAllWithStockAsync();
-        return Ok(product);
+        IList<Product> products;
+        try
+        {
+            products = await _productRepository.GetAllWithStockAsync();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        return Ok(products);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] ProductForm dto)
+    public async Task<IActionResult> Create([FromBody] ProductForm form)
     {
-        var product = await _productRepository.CreateAsync(dto);
+        Product product;
+        try
+        {
+            product = await _productRepository.CreateAsync(form);
+        }
+        catch (ArgumentNullException ex)
+        {
+            return UnprocessableEntity(ex.Message);
+        }
+        return Ok(product);
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<IActionResult> Update([FromQuery] int id, [FromBody] ProductForm form)
+    {
+        Product product;
+        try
+        {
+            product = await _productRepository.UpdateAsync(id, form);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
         return Ok(product);
     }
 }

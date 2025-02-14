@@ -16,7 +16,7 @@ public class ProductRepository
 
     public async Task<Product> CreateAsync(ProductForm form)
     {
-        if (form == null) throw new ArgumentNullException("Product cannot be null.");
+        if (form == null) throw new ArgumentException("Product is not in a acceptible format.");
         var product = new Product(form);
         await _context.AddAsync(product);
         await _context.SaveChangesAsync();
